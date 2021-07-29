@@ -10,16 +10,12 @@ Audi,Gasoline,8,26,17
 Audi,Gasoline,10,22,14
 Audi,Gasoline,4,32,24
 Bentley,Gasoline,8,22,13
-Bentley,Gasoline,12,20,12
 BMW,Diesel,4,41,30
 BMW,Diesel,6,29,23
 BMW,Electricity,0,109,133
-BMW,Gasoline,2,33,36
-BMW,Gasoline,3,29,28
 BMW,Gasoline,4,32,23
 BMW,Gasoline,6,28,19
 BMW,Gasoline,8,23,15
-BMW,Gasoline,12,20,13
 Buick,Gasoline,4,27,20
 Buick,Gasoline,4,31,23
 Buick,Gasoline,6,26,18
@@ -41,11 +37,9 @@ Chrysler,Gasoline,4,36,23
 Chrysler,Gasoline,6,29,20
 Dodge,Gasoline,8,24,15
 Dodge,Gasoline,8,23,14
-Dodge,Gasoline,10,19,12
 Dodge,Gasoline,4,25,19
 Dodge,Gasoline,6,27,18
 Ferrari,Gasoline,8,22,16
-Ferrari,Gasoline,12,16,12
 Fiat,Electricity,0,103,121
 Fiat,Gasoline,4,34,26
 Fiat,Gasoline,4,30,22
@@ -53,7 +47,6 @@ Ford,Electricity,0,96,118
 Ford,Gasoline,4,25,19
 Ford,Gasoline,6,18,11
 Ford,Gasoline,8,21,14
-Ford,Gasoline,3,40,29
 Ford,Gasoline,4,31,24
 Ford,Gasoline,6,23,17
 Ford,Gasoline,8,22,15
@@ -88,8 +81,6 @@ Kia,Electricity,0,92,120
 Kia,Gasoline,8,23,15
 Kia,Gasoline,4,33,27
 Kia,Gasoline,6,25,18
-Lamborghini,Gasoline,10,21,14
-Lamborghini,Gasoline,12,17,10
 Land Rover,Diesel,6,28,22
 Land Rover,Gasoline,4,27,20
 Land Rover,Gasoline,6,23,17
@@ -111,11 +102,9 @@ Mercedes-Benz,Electricity,0,82,85
 Mercedes-Benz,Gasoline,4,30,23
 Mercedes-Benz,Gasoline,6,25,19
 Mercedes-Benz,Gasoline,8,22,16
-Mercedes-Benz,Gasoline,12,20,13
 MINI,Gasoline,4,33,24
 Mitsubishi,Electricity,0,102,121
 Mitsubishi,Gasoline,6,27,20
-Mitsubishi,Gasoline,3,42,35
 Mitsubishi,Gasoline,4,31,24
 Nissan,Electricity,0,101,124
 Nissan,Gasoline,4,31,26
@@ -129,9 +118,7 @@ Porsche,Gasoline,8,21,14
 Ram,Gasoline,8,21,14
 Ram,Gasoline,4,28,21
 Ram,Gasoline,6,24,17
-Rolls-Royce,Gasoline,12,19,12
 Roush Performance,Gasoline,8,23,14
-smart,Gasoline,3,39,32
 Subaru,Gasoline,4,27,21
 Subaru,Gasoline,4,33,25
 Subaru,Gasoline,6,28,20
