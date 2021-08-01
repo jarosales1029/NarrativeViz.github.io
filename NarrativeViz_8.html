@@ -325,7 +325,7 @@
                 .attr("class", function (d) { return "circle a" + d.EngineCylinders })
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
-                .attr("r", rValue)
+                .attr("r", rValue + 3)
                 .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
