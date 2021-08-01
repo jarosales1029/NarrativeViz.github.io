@@ -323,7 +323,7 @@
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
                 .attr("r", rValue)
-                .attr("stroke", "black")
+                .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
                 .on("click", onClick)
