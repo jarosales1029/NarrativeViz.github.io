@@ -371,9 +371,6 @@
 
                 // plot circles with new axes
                 scatter
-                    .transition("fillColor")
-                    .delay(function (d, i) { return (i * 3) })
-                    .duration(1337)
                     .attr("cx", nXValue)
                     .attr("cy", nYValue)
                     .attr("stroke", "none");
