@@ -172,23 +172,15 @@
             // on click function
             var onClick = function (d) {
 
-                d3.selectAll(".circle")
-                    .transition()
-                    .duration(200)
-                    .attr("r", rValue)
-                    .style("stroke", "none")
-                    .style("fill", cylinder_color)
-                    .style("opacity", .75)
-
                 legI1
-                    .style("opacity", .9)
+                    .style("opacity", .1)
                 legV1
-                    .style("opacity", .9)
+                    .style("opacity", .1)
 
                 legI2
-                    .style("opacity", .9)
+                    .style("opacity", .1)
                 legV2
-                    .style("opacity", .9)
+                    .style("opacity", .1)
 
                 legI3
                     .style("opacity", .9)
@@ -196,9 +188,35 @@
                     .style("opacity", .9)
 
                 legI4
-                    .style("opacity", .9)
+                    .style("opacity", .1)
                 legV4
-                    .style("opacity", .9)
+                    .style("opacity", .1)
+
+                d3.selectAll(".circle")
+                    .transition()
+                    .duration(300)
+                    .attr("r", rValue)
+                    .style("stroke", "none")
+                    .style("fill", noColor)
+                    .style("opacity", .1)
+                    .attr("r", 0)
+                d3.selectAll(".circle").filter(filter)
+                    .transition()
+                    .duration(500)
+                    .style("stroke", "none")
+                    .style("fill", cylinder_color)
+                d3.select(this)
+                    .transition()
+                    .duration(2000)
+                    .style("stroke", "black")
+                    .style("fill", cylinder_color)
+                    .style("opacity", 1)
+                    .attr("r", 0)
+                tooltip.style("opacity", .8)
+                    .style("left", (d3.event.pageX) + 50 + "px")
+                    .style("top", (d3.event.pageY) + "px")
+                    .html(d.Make + "<br /> Fuel: " + d.Fuel + "<br /> Cylinders: " + d.EngineCylinders + "<br /> City: " +
+                        d.AverageCityMPG + "<br /> Highway: " + d.AverageHighwayMPG);
             }
 
             // create mouseleave function
