@@ -141,6 +141,8 @@
 
             // radius value
             var rValue = function (d) { return parseInt(d.EngineCylinders) + 6; }
+            
+            var orValue = function (d) { return parseInt(d.EngineCylinders) + 12; }
 
             // engine cylinders variable for color
             var cylinder_color = function (d) { return color(d.EngineCylinders) }
@@ -325,7 +327,7 @@
                 .attr("class", function (d) { return "circle a" + d.EngineCylinders })
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
-                .attr("r", rValue + 3)
+                .attr("r", orValue)
                 .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
