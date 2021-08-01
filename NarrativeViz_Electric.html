@@ -27,7 +27,7 @@
     .center {
         display: flex;
         margin: 0;
-        position: absolute;
+        position: relative;
         top: 11.5%;
         left: 50%;
         -ms-transform: translate(-50%, -50%);
@@ -157,7 +157,7 @@
                 .extent([[0, 0], [width, height]])
                 .on("zoom", updateChart);
 
-            // this add an invisible rect on top of the chart area. This rect can recover pointer events: necessary to understand when zooming occurs
+            // this invisible rect can recover pointer events which is necessary to understand when zooming occurs
             svg.append("rect")
                 .style("opacity", 0)
                 .attr("width", width)
@@ -165,7 +165,7 @@
                 .style("fill", "none")
                 .style("pointer-events", "all")
                 .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-                .call(zoom); // when the user zooms, it will trigger the function called updateChart
+                .call(zoom); // trigger the function called updateChart
 
             // x value
             var xValue = function (d) { return logX(d.AverageCityMPG); }
@@ -242,7 +242,6 @@
                     .style("stroke", "none")
                     .style("fill", cylinder_color)
                     .style("opacity", .7)
-                //.attr("r", 0)
             }
 
             // create mouseover function
