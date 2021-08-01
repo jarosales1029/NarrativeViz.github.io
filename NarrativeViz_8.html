@@ -374,9 +374,10 @@
                     .transition("stroke")
                     .delay(function (d, i) { return (i * 14) })
                     .duration(1337)
-                    .attr("stroke", "black")
                     .attr("cx", nXValue)
-                    .attr("cy", nYValue);
+                    .attr("cy", nYValue)
+                    .style("stroke", "black")
+                    .style("opacity", ".9");
             }
 
             // border for the entire chart
