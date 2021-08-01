@@ -332,10 +332,10 @@
                 .attr("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
-                //.on("click", onClick)
-                //.on("mouseleave", mouseLeave)
-                //.on("mouseover", mouseOver)
-                //.on("mouseout", function () { tooltip.style("opacity", 0) });
+                .on("click", onClick)
+                .on("mouseleave", mouseLeave)
+                .on("mouseover", mouseOver)
+                .on("mouseout", function () { tooltip.style("opacity", 0) });
 
             // changing the logX domain to setup for the transition
             logX.domain([10, 150])
