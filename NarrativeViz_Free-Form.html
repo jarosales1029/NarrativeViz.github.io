@@ -134,6 +134,7 @@
 
             // radius value
             var rValue = function (d) { return parseInt(d.EngineCylinders) + 6; }
+            var orValue = function (d) { return parseInt(d.EngineCylinders) + 15; }
 
             // engine cylinders variable for color
             var cylinder_color = function (d) { return color(d.EngineCylinders) }
@@ -237,7 +238,7 @@
                 .attr("class", function (d) { return "circle " + d.EngineCylinders })
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
-                .attr("r", rValue)
+                .attr("r", orValue)
                 .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
@@ -260,7 +261,8 @@
                 .duration(1337)
                 .style("stroke", "none")
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
-                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); });
+                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
+                .attr("r", rValue);
 
 
             // updates the chart when new boundaries are available after zoom
@@ -288,9 +290,10 @@
                     .transition("stroke")
                     .delay(function (d, i) { return (i * 14) })
                     .duration(1337)
-                    .style("stroke", "black")
+                    .style("stroke", "none")
                     .attr("cx", nXValue)
-                    .attr("cy", nYValue);
+                    .attr("cy", nYValue)
+                    .attr("r", rValue);
             }
 
             // border for the entire chart
