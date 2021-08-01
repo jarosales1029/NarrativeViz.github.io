@@ -139,10 +139,9 @@
                 .attr("x", 0)
                 .attr("y", 0);
 
-            // radius value
+            // radius values
             var rValue = function (d) { return parseInt(d.EngineCylinders) + 6; }
-            
-            var orValue = function (d) { return parseInt(d.EngineCylinders) + 12; }
+            var orValue = function (d) { return parseInt(d.EngineCylinders) + 15; }
 
             // engine cylinders variable for color
             var cylinder_color = function (d) { return color(d.EngineCylinders) }
