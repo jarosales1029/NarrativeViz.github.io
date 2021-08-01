@@ -257,7 +257,7 @@
                     .attr("r", rValue)
                     .style("stroke", "none")
                     .style("fill", cylinder_color)
-                    .style("opacity", .75)
+                    .style("opacity", .5)
             }
 
             // create mouseover function
@@ -322,7 +322,7 @@
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
                 .attr("r", rValue)
                 .style("fill", cylinder_color)
-                .style("opacity", .75)
+                .style("opacity", .5)
                 .on("click", onClick)
                 .on("mouseleave", mouseLeave)
                 .on("mouseover", mouseOver)
