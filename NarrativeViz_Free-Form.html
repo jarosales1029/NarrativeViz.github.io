@@ -238,6 +238,7 @@
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
                 .attr("r", rValue)
+                .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
                 .on("click", onClick)
@@ -254,9 +255,10 @@
 
             // plot circles with new xAxis domain of [10, 150]
             scatter
-                .transition("fillColor")
-                .delay(function (d, i) { return (i * 3) })
+                .transition("stroke)
+                .delay(function (d, i) { return (i * 14) })
                 .duration(1337)
+                .style("stroke", "none")
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); });
 
@@ -283,9 +285,10 @@
 
                 // plot circles with new axes
                 scatter
-                    .transition("fillColor")
-                    .delay(function (d, i) { return (i * 3) })
+                    .transition("stroke")
+                    .delay(function (d, i) { return (i * 14) })
                     .duration(1337)
+                    .style("stroke", "black")
                     .attr("cx", nXValue)
                     .attr("cy", nYValue);
             }
