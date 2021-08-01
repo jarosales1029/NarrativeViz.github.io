@@ -262,7 +262,7 @@
                     .attr("r", rValue)
                     .style("stroke", "none")
                     .style("fill", cylinder_color)
-                    .style("opacity", .5)
+                    .style("opacity", .75)
             }
 
             // create mouseover function
@@ -374,9 +374,9 @@
                     .transition("stroke")
                     .delay(function (d, i) { return (i * 14) })
                     .duration(1337)
+                    .style("stroke", "black")
                     .attr("cx", nXValue)
-                    .attr("cy", nYValue)
-                    .attr("stroke", "black");
+                    .attr("cy", nYValue);
             }
 
             // border for the entire chart
