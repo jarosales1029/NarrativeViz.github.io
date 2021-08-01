@@ -350,7 +350,8 @@
                 .duration(1337)
                 .style("stroke", "none")
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
-                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); });
+                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
+                .attr("r", rValue);
 
             // updates the chart when new boundaries are available after zoom
             function updateChart() {
@@ -379,7 +380,8 @@
                     .duration(1337)
                     .style("stroke", "none")
                     .attr("cx", nXValue)
-                    .attr("cy", nYValue);
+                    .attr("cy", nYValue)
+                    .attr("r", orValue);
             }
 
             // border for the entire chart
