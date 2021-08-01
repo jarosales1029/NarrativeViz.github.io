@@ -323,16 +323,19 @@
                 .enter()
                 .append("circle")
                 .attr("class", function (d) { return "circle a" + d.EngineCylinders })
+                .transition("fillColor")
+                .delay(function (d, i) { return (i * 3) })
+                .duration(237)
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
                 .attr("r", rValue)
                 .attr("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
-                .on("click", onClick)
-                .on("mouseleave", mouseLeave)
-                .on("mouseover", mouseOver)
-                .on("mouseout", function () { tooltip.style("opacity", 0) });
+                //.on("click", onClick)
+                //.on("mouseleave", mouseLeave)
+                //.on("mouseover", mouseOver)
+                //.on("mouseout", function () { tooltip.style("opacity", 0) });
 
             // changing the logX domain to setup for the transition
             logX.domain([10, 150])
@@ -347,9 +350,7 @@
                 .delay(function (d, i) { return (i * 3) })
                 .duration(1337)
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
-                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
-                .attr("stroke", "black");;
-
+                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); });
 
             // updates the chart when new boundaries are available after zoom
             function updateChart() {
