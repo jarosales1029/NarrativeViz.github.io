@@ -344,7 +344,7 @@
             // plot circles with new xAxis domain of [10, 150]
             scatter
                 .transition("stroke")
-                .delay(function (d, i) { return (i * 25) })
+                .delay(function (d, i) { return (i * 10) })
                 .duration(1337)
                 .attr("stroke", "none")
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
@@ -373,7 +373,7 @@
                 // plot circles with new axes
                 scatter
                     .transition("stroke")
-                    .delay(function (d, i) { return (i * 25) })
+                    .delay(function (d, i) { return (i * 10) })
                     .duration(1337)
                     .attr("stroke", "none")
                     .attr("cx", nXValue)
