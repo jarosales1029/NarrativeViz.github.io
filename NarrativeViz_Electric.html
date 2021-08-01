@@ -1,0 +1,409 @@
+<html>
+
+<!-- Load d3.js -->
+<script src='https://d3js.org/d3.v5.min.js'></script>
+
+<style>
+    #legend {
+        opacity: 0;
+        position: absolute;
+        text-align: left;
+        width: 145px;
+        height: 90px;
+        background: white;
+        border: 2px;
+    }
+
+    #tooltip2 {
+        opacity: 0;
+        position: absolute;
+        text-align: center;
+        width: 145px;
+        height: 90px;
+        background: white;
+        border: 0px;
+    }
+
+    .center {
+        display: flex;
+        margin: 0;
+        position: relative;
+        top: 11.5%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+</style>
+
+<h1 style="text-align:center;">
+    Average Mile Per Gallon by Enginte Type Scattorplot
+</h1>
+</br>
+
+<div class="container">
+    <div class="center">
+        <button onclick="window.location.href='https://jarosales1029.github.io/NarrativeViz.github.io/NarrativeViz_8.html'" type="button">8 Cylinders</button>
+        <button onclick="window.location.href='https://jarosales1029.github.io/NarrativeViz.github.io/NarrativeViz_6.html'" type="button">6 Cylinders</button>
+        <button onclick="window.location.href='https://jarosales1029.github.io/NarrativeViz.github.io/NarrativeViz_4.html'" type="button">4 Cylinders</button>
+        <button onclick="window.location.href='https://jarosales1029.github.io/NarrativeViz.github.io/NarrativeViz_Electric.html'" type="button">Electric</button>
+        <button onclick="window.location.href='https://jarosales1029.github.io/NarrativeViz.github.io/NarrativeViz_Free-Form.html'" type="button">Free Form</button>
+    </div>
+</div>
+
+<body onload='init()'>
+
+    <!-- Create a div where the graph will take place -->
+    <div id="chart_viz"></div>
+
+    <p id="p1">This Scatterplot supports zooming. Have fun!</p>
+
+    <script>
+
+        async function init() {
+
+            // set the dimensions and margins of the graph
+            var margin = { top: 10, right: 30, bottom: 40, left: 60 },
+                width = 600 - margin.right - margin.left,
+                height = 600 - margin.top - margin.bottom;
+
+            // append the svg to the body
+            var svg = d3.select("#chart_viz")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+            // read the data
+            const data = await d3.csv('https://raw.githubusercontent.com/jarosales1029/NarrativeViz.github.io/main/cars2017.csv')
+
+            // variables
+            var filter = ".a0"
+            var cColor = "purple"
+            var noColor = "lightgrey"
+            var cOpacity = .9
+            var lowOpacity = .1
+
+            // xScale logarithmic
+            var logX = d3.scaleLog()
+                .domain([10, 10])
+                .range([0, width - 20])
+                .base(10);
+
+            // yScale logarithmic
+            var logY = d3.scaleLog()
+                .domain([10, 150])
+                .range([height, 0])
+                .base(10);
+
+            // xAxis
+            var xAxis = svg.append("g")
+                .attr("class", "xAxis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(logX)
+                    .tickValues([10, 20, 50, 100, 150])
+                    .tickFormat(d3.format("~s")));
+
+            // yAxis
+            var yAxis = svg.append("g")
+                .attr("class", "yAxis")
+                .call(d3.axisLeft(logY)
+                    .tickValues([10, 20, 50, 100, 150])
+                    .tickFormat(d3.format("~s")));
+
+            // xAxis label
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("x", width / 2 - margin.top)
+                .attr("y", height + (+margin.right + 7))
+                .text("Average City MPG")
+                .style("font-weight", 900)
+                .style("text-decoration", "underline")
+
+            // yAxis label
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -margin.left + 20)
+                .attr("x", -height / 2)
+                .text("Average Highway MPG")
+                .style("font-weight", 900)
+                .style("text-decoration", "underline")
+
+            // add a clipPath
+            var clip = svg.append("defs").append("svg:clipPath")
+                .attr("id", "clip")
+                .append("svg:rect")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("x", 0)
+                .attr("y", 0);
+
+            // radius value
+            var rValue = function (d) { return parseInt(d.EngineCylinders) + 6; }
+
+            // engine cylinders variable for color
+            var cylinder_color = function (d) { return color(d.EngineCylinders) }
+
+            // color scale: give me the EngineCylinders value and return a color
+            var color = d3.scaleOrdinal()
+                .domain(["0", "4", "6", "8", "1"])
+                .range(["purple", "orange", "green", "steelblue", "lightgrey"])
+
+            // set the zoom and pan features
+            var zoom = d3.zoom()
+                .scaleExtent([.5, 10])
+                .extent([[0, 0], [width, height]])
+                .on("zoom", updateChart);
+
+            // this invisible rect can recover pointer events which is necessary to understand when zooming occurs
+            svg.append("rect")
+                .style("opacity", 0)
+                .attr("width", width)
+                .attr("height", height)
+                .style("fill", "none")
+                .style("pointer-events", "all")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                .call(zoom);
+
+            // x value
+            var xValue = function (d) { return logX(d.AverageCityMPG); }
+
+            // y value
+            var yValue = function (d) { return logY(d.AverageHighwayMPG); }
+
+            // on click function
+            var onClick = function (d) {
+
+                d3.selectAll(".circle")
+                    .transition()
+                    .duration(200)
+                    .attr("r", rValue)
+                    .style("stroke", "none")
+                    .style("fill", cylinder_color)
+                    .style("opacity", .75)
+
+                legI1
+                    .style("opacity", .9)
+                legV1
+                    .style("opacity", .9)
+
+                legI2
+                    .style("opacity", .9)
+                legV2
+                    .style("opacity", .9)
+
+                legI3
+                    .style("opacity", .9)
+                legV3
+                    .style("opacity", .9)
+
+                legI4
+                    .style("opacity", .9)
+                legV4
+                    .style("opacity", .9)
+            }
+
+            // create mouseleave function
+            var mouseLeave = function (d) {
+
+                legI1
+                    .style("opacity", .9)
+                legV1
+                    .style("opacity", .9)
+
+                legI2
+                    .style("opacity", .9)
+
+                legV2
+                    .style("opacity", .9)
+
+                legI3
+                    .style("opacity", .9)
+                legV3
+                    .style("opacity", .9)
+
+                legI4
+                    .style("opacity", .9)
+                legV4
+                    .style("opacity", .9)
+
+                d3.selectAll(".circle").filter(filter)
+                    .transition()
+                    .duration(1000)
+                    .style("stroke", "black")
+                    .style("fill", cylinder_color)
+                    .style("opacity", .9)
+                d3.selectAll(".circle")
+                    .transition()
+                    .duration(900)
+                    .attr("r", rValue)
+                    .style("stroke", "none")
+                    .style("fill", cylinder_color)
+                    .style("opacity", .75)
+            }
+
+            // create mouseover function
+            var mouseOver = function (d) {
+
+                legI1
+                    .style("opacity", .1)
+                legV1
+                    .style("opacity", .1)
+
+                legI2
+                    .style("opacity", .1)
+                legV2
+                    .style("opacity", .1)
+
+                legI3
+                    .style("opacity", .1)
+                legV3
+                    .style("opacity", .1)
+
+                legI4
+                    .style("opacity", .9)
+                legV4
+                    .style("opacity", .9)
+
+                d3.selectAll(".circle")
+                    .transition()
+                    .duration(300)
+                    .attr("r", rValue)
+                    .style("stroke", "none")
+                    .style("fill", noColor)
+                    .style("opacity", .1)
+                    .attr("r", 0)
+                d3.selectAll(".circle").filter(filter)
+                    .transition()
+                    .duration(500)
+                    .style("stroke", "none")
+                    .style("fill", cylinder_color)
+                d3.select(this)
+                    .transition()
+                    .duration(2000)
+                    .style("stroke", "black")
+                    .style("fill", cylinder_color)
+                    .style("opacity", 1)
+                    .attr("r", 0)
+                tooltip.style("opacity", .8)
+                    .style("left", (d3.event.pageX) + 50 + "px")
+                    .style("top", (d3.event.pageY) + "px")
+                    .html(d.Make + "<br /> Fuel: " + d.Fuel + "<br /> Cylinders: " + d.EngineCylinders + "<br /> City: " +
+                        d.AverageCityMPG + "<br /> Highway: " + d.AverageHighwayMPG);
+            }
+
+            // create circles with xAxis at [10, 10]
+            var scatter = svg.append('g')
+                .attr("clip-path", "url(#clip)")
+                .selectAll(".circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", function (d) { return "circle a" + d.EngineCylinders })
+                .attr("cx", function (d) { return logX(d.AverageCityMPG); })
+                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
+                .attr("r", rValue)
+                .style("fill", cylinder_color)
+                .style("opacity", .5)
+                .on("click", onClick)
+                .on("mouseleave", mouseLeave)
+                .on("mouseover", mouseOver)
+                .on("mouseout", function () { tooltip.style("opacity", 0) });
+
+            // changing the logX domain to setup for the initial transition
+            logX.domain([10, 150])
+            svg.select(".xAxis")
+                .call(d3.axisBottom(logX)
+                    .tickValues([10, 20, 50, 100, 150])
+                    .tickFormat(d3.format("~s")));
+
+            // plot circles with new xAxis domain of [10, 150]
+            scatter
+                .transition("fillColor")
+                .delay(function (d, i) { return (i * 3) })
+                .duration(1337)
+                .attr("cx", function (d) { return logX(d.AverageCityMPG); })
+                .attr("cy", function (d) { return logY(d.AverageHighwayMPG); });
+
+
+            // updates the chart when new boundaries are available after zoom
+            function updateChart() {
+
+                // recover the new scale
+                var newX = d3.event.transform.rescaleX(logX);
+                var newY = d3.event.transform.rescaleY(logY);
+
+                // new x value after transitions
+                var nXValue = function (d) { return newX(d.AverageCityMPG); }
+                // new y value after transitions
+                var nYValue = function (d) { return newY(d.AverageHighwayMPG); }
+
+                // update axes with these new boundaries
+                xAxis.call(d3.axisBottom(newX)
+                    .tickValues([10, 20, 50, 100, 150])
+                    .tickFormat(d3.format("~s")))
+                yAxis.call(d3.axisLeft(newY)
+                    .tickValues([10, 20, 50, 100, 150])
+                    .tickFormat(d3.format("~s")))
+
+                // plot circles with new axes
+                scatter
+                    .transition("fillColor")
+                    .delay(function (d, i) { return (i * 3) })
+                    .duration(1337)
+                    .attr("cx", nXValue)
+                    .attr("cy", nYValue);
+            }
+
+            // border for the entire chart
+            var border = d3.select("#chart_viz")
+                .select("svg")
+                .style("opacity", 1)
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "15px");
+
+            // tooltip variable
+            var tooltip = d3.selectAll("#chart_viz")
+                .append("div")
+                .style("position", "absolute")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "5px");
+
+            // manual legend
+            var size = 15;
+
+            var legT = svg.append("text").attr("x", 395).attr("y", 405).text("Engine Types").attr("alignment-baseline", "middle")
+                .style("font-size", "18px").style("font-weight", 900).style("text-decoration", "underline").style("opacity", .9)
+
+            var legI1 = svg.append("rect").attr("x", 400).attr("y", 420).attr("width", size).attr("height", size)
+                .style("fill", "steelblue").style("stroke", "black").style("stroke-width", 2).style("opacity", .9)
+            var legI2 = svg.append("rect").attr("x", 400).attr("y", 450).attr("width", size).attr("height", size)
+                .style("fill", "green").style("stroke", "black").style("stroke-width", 2).style("opacity", .9)
+            var legI3 = svg.append("rect").attr("x", 400).attr("y", 480).attr("width", size).attr("height", size)
+                .style("fill", "orange").style("stroke", "black").style("stroke-width", 2).style("opacity", .9)
+            var legI4 = svg.append("rect").attr("x", 400).attr("y", 510).attr("width", size).attr("height", size)
+                .style("fill", "purple").style("stroke", "black").style("stroke-width", 2).style("opacity", .9)
+
+            var legV1 = svg.append("text").attr("x", 420).attr("y", 430).text("8 Cylinders").attr("alignment-baseline", "middle")
+                .style("font-size", "15px").style("font-weight", 400).style("opacity", .9)
+            var legV2 = svg.append("text").attr("x", 420).attr("y", 460).text("6 Cylinders").attr("alignment-baseline", "middle")
+                .style("font-size", "15px").style("font-weight", 400).style("opacity", .9)
+            var legV3 = svg.append("text").attr("x", 420).attr("y", 490).text("4 Cylinders").attr("alignment-baseline", "middle")
+                .style("font-size", "15px").style("font-weight", 400).style("opacity", .9)
+            var legV4 = svg.append("text").attr("x", 420).attr("y", 520).text("Electric").attr("alignment-baseline", "middle")
+                .style("font-size", "15px").style("font-weight", 400).style("opacity", .9)
+        }
+    </script>
+</body>
+
+</html>
