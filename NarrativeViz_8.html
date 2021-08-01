@@ -372,12 +372,13 @@
 
                 // plot circles with new axes
                 scatter
+                    .attr("stroke", "black")
                     .transition("fillColor")
                     .delay(function (d, i) { return (i * 3) })
                     .duration(1337)
                     .attr("cx", nXValue)
                     .attr("cy", nYValue)
-                    .attr("stroke", "black");
+                    .attr("stroke", "none");
             }
 
             // border for the entire chart
