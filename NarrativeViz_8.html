@@ -74,6 +74,13 @@
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            
+            svg.selectAll(".line")
+                    .append("line")
+                    .attr("x1", margin.right - margin.left+100)
+                    .attr("y1", margin.right - margin.left+150)
+                    .attr("x2", margin.right - margin.left+50)
+                    .attr("y2", margin.right - margin.left+100)
 
             // read the data
             const data = await d3.csv('https://raw.githubusercontent.com/jarosales1029/NarrativeViz.github.io/gh-pages/cars2017.csv')
@@ -177,7 +184,7 @@
             // on click function
             var onClick = function (d) {
 
-                 legI1
+                legI1
                     .style("opacity", .9)
                 legV1
                     .style("opacity", .9)
