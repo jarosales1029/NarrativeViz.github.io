@@ -33,15 +33,6 @@
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     }
-    
-    svg {
-        background-color: GhostWhite;
-        font-family: 'Lato';
-    }
-
-    .annotation-group, text.title {
-        font-size: .9em;
-    }
 </style>
 
 <h1 style="text-align:center;">
@@ -93,23 +84,6 @@
             var noColor = "lightgrey"
             var cOpacity = .9
             var lowOpacity = .1
-            
-            const annotations = [{
-                    type: d3.annotationCallout,
-                    note: {
-                        label: "Countries that have higher GDP seem to have higher life expectancy",
-                        title: "1st Trend",
-                        wrap: 340
-                    },
-                    x: 1290,
-                    y: 310,
-                    dy: 30,
-                    dx: 90
-                }].map(function(d){ d.color = "Blue"; return d})
-            
-            const makeAnnotations = d3.annotation()
-                .type(d3.annotationLabel)
-                .annotations(annotations)
 
             // xScale logarithmic
             var logX = d3.scaleLog()
@@ -348,8 +322,6 @@
                 .attr("cx", function (d) { return logX(d.AverageCityMPG); })
                 .attr("cy", function (d) { return logY(d.AverageHighwayMPG); })
                 .attr("r", orValue)
-                .attr("class", "annotation-group")
-                .call(makeAnnotations)
                 .style("stroke", "black")
                 .style("fill", cylinder_color)
                 .style("opacity", .5)
