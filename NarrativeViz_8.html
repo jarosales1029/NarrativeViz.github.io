@@ -97,6 +97,10 @@
                     dy: 30,
                     dx: 90
                 }].map(function(d){ d.color = "Blue"; return d})
+            
+            const makeAnnotations = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations(annotations)
 
             // xScale logarithmic
             var logX = d3.scaleLog()
@@ -341,7 +345,9 @@
                 .on("click", onClick)
                 .on("mouseleave", mouseLeave)
                 .on("mouseover", mouseOver)
-                .on("mouseout", function () { tooltip.style("opacity", 0) });
+                .on("mouseout", function () { tooltip.style("opacity", 0) })
+                .attr("class", "annotation-group")
+                .call(makeAnnotations);
 
             // changing the logX domain to setup for the transition
             logX.domain([10, 150])
