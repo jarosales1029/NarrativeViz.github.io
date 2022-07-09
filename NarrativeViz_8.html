@@ -84,6 +84,19 @@
             var noColor = "lightgrey"
             var cOpacity = .9
             var lowOpacity = .1
+            
+            const annotations = [{
+                    type: d3.annotationCallout,
+                    note: {
+                        label: "Countries that have higher GDP seem to have higher life expectancy",
+                        title: "1st Trend",
+                        wrap: 340
+                    },
+                    x: 1290,
+                    y: 310,
+                    dy: 30,
+                    dx: 90
+                }].map(function(d){ d.color = "Blue"; return d}
 
             // xScale logarithmic
             var logX = d3.scaleLog()
